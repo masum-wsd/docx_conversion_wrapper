@@ -32,9 +32,9 @@ public class FileUploadServiceImpl implements IFileUploadService {
 
     @Override
     public Mono<Void> uploadAndProcessFile(MultipartFile file) {
-        if (!fileValidationService.isValidFile(file)) {
-            return Mono.error(new RuntimeException("Invalid file type or size."));
-        }
+//        if (!fileValidationService.isValidFile(file)) {
+//            return Mono.error(new RuntimeException("Invalid file type or size."));
+//        }
 
         return uploadFile(file)
                 .flatMap(fetchedFile -> fileToMultipartFile(fetchedFile)

@@ -8,6 +8,7 @@ import com.wsd.docx_conversion_wrapper_microservice.services.IMinioService;
 import com.wsd.docx_conversion_wrapper_microservice.utils.ApiResponseUtil;
 import com.wsd.docx_conversion_wrapper_microservice.dto.responsesDTO.ApiResponseDTO;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.ws.rs.Consumes;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,7 +39,7 @@ public class DocxController {
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
 
-    @PostMapping("/upload2")
+    @PostMapping(value = "/upload2", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public Mono<ResponseEntity<String>> uploadFile(@RequestParam("file") MultipartFile file) {
         return fileUploadService.uploadAndProcessFile(file)
                 .then(minioService.uploadFile("original-files", file))
@@ -48,9 +49,10 @@ public class DocxController {
                 });
     }
 
-    @PostMapping("/upload")
+    @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ApiResponseDTO<?>> handleFileUpload(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
         ApiResponseDTO<?> responseDTO;
+        System.out.println("ok");
         try {
             minioService.uploadFile("original-files", file);
 //            System.out.println(fileUrl);

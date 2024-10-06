@@ -25,8 +25,8 @@ public class KeycloakAdminServiceImpl {
                 .realm("testrealm")
                 .grantType(OAuth2Constants.PASSWORD)
                 .clientId("admin-cli")
-                .username("abdullah")
-                .password("abdullah")
+                .username("keycloak_admin")
+                .password("keycloak_password")
                 .build();
     }
 

@@ -7,8 +7,6 @@ services:
     container_name: docx_conversion_wrapper_app
     ports:
       - "${APPLICATION_PORT}:8080"   # Expose port 8080 for the Spring Boot application
-    networks:
-      - app-network
     environment:
       - SPRING_PROFILES_ACTIVE=dev  # You can set your environment variables here
     build:
@@ -21,20 +19,6 @@ services:
       retries: 5
       start_period: 10s
   
-  jmeter:
-    image: justb4/jmeter:latest
-    container_name: jmeter_test
-    depends_on:
-      - app
-    volumes:
-      - ./src/test/jmeter:/tests   # Mount your local JMeter test directory into the container
-      - ./target/jmeter/results:/results  # Mount a local directory to store JMeter results
-    entrypoint: >
-      sh -c "rm -f /results/results.jtl && rm -rf /results/html-report/* && jmeter -n -t /tests/test-plan.jmx -l /results/results.jtl -e -o /results/html-report"
-    networks:
-    - app-network
-      
-      
   prometheus:
     image: prom/prometheus:latest
     container_name: prometheus

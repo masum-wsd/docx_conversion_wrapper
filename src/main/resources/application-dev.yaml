@@ -10,7 +10,8 @@
 springdoc:
   swagger-ui:
     path: swagger-ui.html
-    
+    enabled: true
+  show-actuator: true
 spring:
   codec:
     max-in-memory-size: 100MB
@@ -23,8 +24,6 @@ spring:
     base-url: http://localhost:9411/
   elasticsearch:
     cluster-nodes: http://localhost:9200
-  main:
-    allow-circular-references: true
   security:
     oauth2:
       resourceserver:
@@ -42,7 +41,7 @@ management:
             requests: true
   observations:
     key-values:
-      application: edgardocs-wrapper
+      application: docx_conversion_wrapper
   tracing:
     sampling:
       probability: 1.0
@@ -58,16 +57,16 @@ management:
         include: health,prometheus,env,metrics,beans,loggers,info 
 # for object storage
 minio:
-  url: http://localhost:9000
+  url: http://localhost:7001
   access:
-    key: y2OarhGk9Czxh0nc7vEh
+    key: wiROOy30mJA1MK2PqBZp
   secret:
-    key: wlXExtE3uX18jZHrzt5AIovkvVzsHdxe0N0XJbVf
+    key: aRoWHcJS9OBc7xhqjMagFl7fMGZhZbCDmTW0pMNW
   bucket:
     name: edgar-bucket
 # for logging
 logging:
   level:
-    root: info
+    root: warn
     console:
-      level: info
+      level: warn

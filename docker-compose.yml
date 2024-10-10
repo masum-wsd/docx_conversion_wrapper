@@ -27,8 +27,8 @@ services:
       - --config.file=/etc/prometheus/prometheus.yml
     ports:
       - "${PROMETHEUS_PORT}:9090"
-    networks:
-      - grafana
+#    networks:
+#      - grafana
     volumes:
       - "${PROMETHEUS_DATA}:/etc/prometheus/prometheus.yml"
 
@@ -44,8 +44,8 @@ services:
       - GF_AUTH_ANONYMOUS_ENABLED=true
       - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
       - GF_AUTH_DISABLE_LOGIN_FORM=true
-    networks:
-      - grafana
+#    networks:
+#      - grafana
     volumes:
       - "${GRAFANA_DATA}:/etc/grafana/provisioning/datasources"
   
@@ -56,8 +56,8 @@ services:
       - "${LOKI_PORT}:3100"
     command: ['-config.file=/etc/loki/local-config.yaml']
     #    restart: unless-stopped
-    networks:
-      - grafana
+#    networks:
+#      - grafana
   
   tempo:
     image: grafana/tempo:latest
@@ -69,8 +69,8 @@ services:
     ports:
       - '${TEMPO_PORT}:3200' # Tempo
       - '${TEMPO_ZIPKIN_PORT}:9411' # Zipkin
-    networks:
-      - grafana
+#    networks:
+#      - grafana
 
   minio:
     image: docker.io/bitnami/minio:latest
@@ -103,20 +103,45 @@ services:
     networks:
       - backend
     depends_on:
-      - keycloak-db
+      - postgres
 
-  keycloak-db:
+  postgres:
     image: postgres:latest
-    container_name: keycloak_db
+    container_name: db-postgres
     environment:
-      POSTGRES_DB: ${POSTGRES_DB}
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      - POSTGRES_USER=${POSTGRES_USER}  
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     ports:
       - "${POSTGRES_PORT}:5432"
     networks:
-      - backend
-  
+      - app-network
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin
+    depends_on:
+      - postgres
+    environment:
+      PGADMIN_DEFAULT_EMAIL: 'abdullahmasum6035@gmail.com'
+      PGADMIN_DEFAULT_PASSWORD: 'password'
+    ports:
+      - "${PGADMIN_PORT}:80"
+    networks:
+      - app-network
+    
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "${REDIS_PORT}:6379"
+    environment:
+      REDIS_PASSWORD: "root"
+    volumes:
+      - redis_data:/data
+
   sonarqube:
     image: sonarqube:latest
     container_name: sonarqube
@@ -132,8 +157,17 @@ services:
 
 networks:
   backend:
-  grafana:
-    driver: bridge
+#  grafana:
+#    driver: bridge
   app-network:
     driver: bridge
+    
+volumes:
+  redis_data:
+  postgres-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./data
 

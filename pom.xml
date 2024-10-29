@@ -54,6 +54,8 @@
         <elastic-apm-agent.version>1.51.0</elastic-apm-agent.version>
         <micrometer-prometheus.version>1.13.4</micrometer-prometheus.version>
         <ulid-creator.version>5.2.3</ulid-creator.version>
+        <commons-collections4.version>4.5.0-M2</commons-collections4.version>
+        <oauth2-client.version>3.3.4</oauth2-client.version>
         <oauth2-resource-server.version>6.3.3</oauth2-resource-server.version>
         <datasource-micrometer.version>1.0.5</datasource-micrometer.version>
 
@@ -100,7 +102,6 @@
             <artifactId>datasource-micrometer</artifactId>
             <version>${datasource-micrometer.version}</version>
         </dependency>
-
         <!-- for object storage -->
         <dependency>
             <groupId>io.minio</groupId>
@@ -149,11 +150,23 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
         </dependency>
+        <!-- for utils library -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+            <version>${commons-collections4.version}</version>
+        </dependency>
         <!-- for security -->
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-oauth2-jose</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-oauth2-client</artifactId>
+            <version>${oauth2-client.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-oauth2-resource-server</artifactId>

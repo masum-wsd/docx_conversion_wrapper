@@ -165,6 +165,8 @@ build/
 ### Docker Section (Project Specific) ###
 /docker/postgresql/data/*
 !/docker/postgresql/data/.gitkeep
+/docker/postgres/data/*
+!/docker/postgres/data/.gitkeep
 /docker/minio/data/*
 !/docker/minio/data/.gitkeep
 /docker/keycloak/data/*

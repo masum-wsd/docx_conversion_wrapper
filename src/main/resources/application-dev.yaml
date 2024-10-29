@@ -8,10 +8,15 @@
 
 # for swagger      
 springdoc:
+  api-docs:
+    path: /v1/wsd
   swagger-ui:
-    path: swagger-ui.html
     enabled: true
+    path: /swagger-ui.html
+    oauth:
+      use-pkce-with-authorization-code-grant: true
   show-actuator: true
+  
 spring:
   codec:
     max-in-memory-size: 100MB
@@ -20,16 +25,20 @@ spring:
       enabled: true
       max-file-size: 100MB
       max-request-size: 100MB
-  zipkin:
-    base-url: http://localhost:9411/
-  elasticsearch:
-    cluster-nodes: http://localhost:9200
+#  zipkin:
+#    base-url: http://localhost:9411/
+#  elasticsearch:
+#    cluster-nodes: http://localhost:9200
   security:
     oauth2:
       resourceserver:
         jwt:
           issuer-uri: http://localhost:8081/realms/testrealm
           jwk-set-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
+      authorizationserver:
+        endpoint:
+          jwk-set-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/token/introspect
+          token-revocation-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/revoke
 
 # for actuator
 management:
@@ -59,9 +68,9 @@ management:
 minio:
   url: http://localhost:7001
   access:
-    key: wiROOy30mJA1MK2PqBZp
+    key: Kfh6CGYZKRtXNg5UeoKK
   secret:
-    key: aRoWHcJS9OBc7xhqjMagFl7fMGZhZbCDmTW0pMNW
+    key: KBA05xZNfgmzvtH6XVX4x1KcuhuhabZxemwyaWY6
   bucket:
     name: edgar-bucket
 # for logging
@@ -70,3 +79,7 @@ logging:
     root: warn
     console:
       level: warn
+      
+# For keycloak related things
+local_keycloak:
+  clientId: "edgar-client"

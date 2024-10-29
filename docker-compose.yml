@@ -101,7 +101,7 @@ services:
     ports:
       - "${KEYCLOAK_PORT}:8080"
     networks:
-      - backend
+      - app-network
     depends_on:
       - postgres
 
@@ -115,8 +115,8 @@ services:
       - "${POSTGRES_PORT}:5432"
     networks:
       - app-network
-    volumes:
-      - postgres-data:/var/lib/postgresql/data
+#    volumes:
+#      - postgres-data:/var/lib/postgresql/data
 
 
   pgadmin:
@@ -169,5 +169,5 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: ./data
+      device: ${POSTGRES_DATA}
 

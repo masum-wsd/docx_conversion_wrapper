@@ -2,12 +2,11 @@
   main:
     banner-mode: off
   application:
-    name: edgardocs-wrapper
+    name: edgar_2_point_o_poc
   profiles:
     active: dev
     default: dev
   security:
     user:
       name: masum
-      password: masum
-#  1203dddb-6427-4c47-af4b-1dc6085dcb6b
+      password: password

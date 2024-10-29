@@ -5,26 +5,48 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.jwt.Jwt;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class KeycloakRoleConverter implements Converter<Jwt, Collection<GrantedAuthority>> {
+
+    private final String clientId;
+
+    public KeycloakRoleConverter(String clientId) {
+        this.clientId = clientId;
+    }
+
     @Override
     public Collection<GrantedAuthority> convert(Jwt jwt) {
-        Map<String, Object> resourceAccess = jwt.getClaim("resource_access");
+        return extractRoles(jwt); // Call the extractRoles method here to process the JWT
+    }
 
-        if (resourceAccess == null || resourceAccess.get("edgar-wrapper-api") == null) {
-            return Collections.emptyList();
+    private Collection<GrantedAuthority> extractRoles(Jwt jwt) {
+        Collection<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+
+        // Extract realm-level roles
+        if (jwt.getClaim("realm_access") != null) {
+            var realmAccess = (Map<String, Object>) jwt.getClaim("realm_access");
+            List<String> realmRoles = (List<String>) realmAccess.get("roles");
+            if (realmRoles != null) {
+                grantedAuthorities.addAll(realmRoles.stream()
+                        .map(role -> new SimpleGrantedAuthority("ROLE_" + role.toUpperCase()))
+                        .collect(Collectors.toList()));
+            }
         }
 
-        Map<String, Object> clientAccess = (Map<String, Object>) resourceAccess.get("edgar-wrapper-api");
+        // Extract client-level roles from resource_access
+        var resourceAccess = jwt.getClaimAsMap("resource_access");
+        if (resourceAccess != null && resourceAccess.containsKey(clientId)) {
+            var clientRoles = (Map<String, Object>) resourceAccess.get(clientId);
+            var roles = (List<String>) clientRoles.get("roles");
+            if (roles != null) {
+                grantedAuthorities.addAll(roles.stream()
+                        .map(role -> new SimpleGrantedAuthority("ROLE_" + role.toUpperCase()))
+                        .collect(Collectors.toList()));
+            }
+        }
 
-        Collection<String> clientRoles = (Collection<String>) clientAccess.get("roles");
-
-        return clientRoles.stream()
-                .map(role -> new SimpleGrantedAuthority("ROLE_" + role)) // Add 'ROLE_' prefix for Spring Security
-                .collect(Collectors.toList());
+        return grantedAuthorities;
     }
 }

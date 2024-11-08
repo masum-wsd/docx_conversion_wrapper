@@ -43,7 +43,7 @@
         <docker-image-name>docx_conversion_wrapper</docker-image-name>
         <docker-image-tag>latest</docker-image-tag>
 
-        <minio.version>8.5.12</minio.version>
+        <minio.version>8.5.13</minio.version>
         <keycloak-admin-client.version>26.0.2</keycloak-admin-client.version>
         <jakarta.ws.rs-api.version>3.1.0</jakarta.ws.rs-api.version>
         <springdoc.version>2.6.0</springdoc.version>

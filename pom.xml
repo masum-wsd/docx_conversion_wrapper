@@ -54,7 +54,7 @@
         <elastic-apm-agent.version>1.51.0</elastic-apm-agent.version>
         <micrometer-prometheus.version>1.13.4</micrometer-prometheus.version>
         <ulid-creator.version>5.2.3</ulid-creator.version>
-        <oauth2-resource-server.version>6.3.3</oauth2-resource-server.version>
+        <oauth2-resource-server.version>6.3.4</oauth2-resource-server.version>
         <datasource-micrometer.version>1.0.5</datasource-micrometer.version>
 
         <nexusUrlRelease>https://registry.production.solvians.com/repository/edgar-repository/</nexusUrlRelease>

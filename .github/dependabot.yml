@@ -3,30 +3,38 @@ updates:
   # Update Maven dependencies in pom.xml
   - package-ecosystem: "maven"
     directory: "/" # Location of package manifests
+    target-branch: "dev"
     schedule:
       interval: "weekly"
       day: "saturday"
-      time: "02:19"
+      time: "02:32"
       timezone: "Asia/Dhaka"
     open-pull-requests-limit: 8 # Maximum number of open PRs created by Dependabot
     labels:
       - "dependencies"
       - "automated-update"
+    reviewers:
+      - "fakhruddinwsd"
+      - "masum-wsd"
     assignees:
       - "masum-wsd" # your-github-username
   
   # Update GitHub Actions dependencies in workflows
   - package-ecosystem: "github-actions"
     directory: "/.github/workflows"
+    target-branch: "dev"
     schedule:
       interval: "weekly"
       day: "saturday"
-      time: "02:19"
+      time: "02:32"
       timezone: "Asia/Dhaka"
     open-pull-requests-limit: 8
     labels:
       - "dependencies"
       - "automated-update"
+    reviewers:
+      - "fakhruddinwsd"
+      - "masum-wsd"
     assignees:
       - "masum-wsd" # your-github-username
     

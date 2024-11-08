@@ -7,12 +7,9 @@ updates:
     schedule:
       interval: "weekly"
       day: "saturday"
-      time: "02:32"
+      time: "02:39"
       timezone: "Asia/Dhaka"
-    open-pull-requests-limit: 8 # Maximum number of open PRs created by Dependabot
-    labels:
-      - "dependencies"
-      - "automated-update"
+    open-pull-requests-limit: 10 # Maximum number of open PRs created by Dependabot
     reviewers:
       - "fakhruddinwsd"
       - "masum-wsd"
@@ -26,12 +23,9 @@ updates:
     schedule:
       interval: "weekly"
       day: "saturday"
-      time: "02:32"
+      time: "02:39"
       timezone: "Asia/Dhaka"
-    open-pull-requests-limit: 8
-    labels:
-      - "dependencies"
-      - "automated-update"
+    open-pull-requests-limit: 10
     reviewers:
       - "fakhruddinwsd"
       - "masum-wsd"

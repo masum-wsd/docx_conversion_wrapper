@@ -50,7 +50,7 @@
         <spring-boot-maven-plugin.version>3.3.4</spring-boot-maven-plugin.version>
         <springdoc-openapi-maven-plugin.version>1.4</springdoc-openapi-maven-plugin.version>
         <logstash-logback-encoder.version>7.4</logstash-logback-encoder.version>
-        <loki-logback-appender.version>1.5.1</loki-logback-appender.version>
+        <loki-logback-appender.version>1.5.2</loki-logback-appender.version>
         <elastic-apm-agent.version>1.51.0</elastic-apm-agent.version>
         <micrometer-prometheus.version>1.13.4</micrometer-prometheus.version>
         <ulid-creator.version>5.2.3</ulid-creator.version>

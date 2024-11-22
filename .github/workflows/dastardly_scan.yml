@@ -1,0 +1,44 @@
+name: CI/CD Pipeline with Dastardly (DAST Scan) and JUnit
+
+on:
+  push:
+    branches: [ "dev" ]
+  pull_request:
+    # The branches below must be a subset of the branches above
+    branches: [ "dev" ]
+  # schedule:
+  #   - cron: '39 11 * * 0'
+jobs:
+  dastardly-scan:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Checkout the repository
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    # Run Dastardly to scan the local application
+    - name: Run Dastardly Action Step
+      continue-on-error: true
+      uses: PortSwigger/dastardly-github-action@main
+      with:
+        target-url: 'https://edgar.wsd.com/docxtohtml/' # Replace with your application URL
+
+    # List all files to help identify the generated report
+    - name: List all files
+      run: ls -R > files_list.txt
+
+    # Archive all generated files to help debug artifact issue
+    - name: Archive Dastardly Artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: dastardly-artifacts
+        path: '**/*'
+
+    # Publish Test Report
+    - name: Publish Test Report
+      if: always()
+      uses: mikepenz/action-junit-report@v3
+      with:
+        report_paths: '**/dastardly-report.xml'
+        require_tests: true

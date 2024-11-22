@@ -22,7 +22,18 @@ jobs:
       continue-on-error: true
       uses: PortSwigger/dastardly-github-action@main
       with:
-        target-url: 'https://edgar.wsd.com/docxtohtml/'
+        target-url: 'https://edgar.wsd.com/docxtohtml/' # Replace with your application URL
+
+    # List all files to help identify the generated report
+    - name: List all files
+      run: ls -R > files_list.txt
+
+    # Archive all generated files to help debug artifact issue
+    - name: Archive Dastardly Artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: dastardly-artifacts
+        path: '**/*'
 
     # Publish Test Report
     - name: Publish Test Report

@@ -44,7 +44,7 @@
         <docker-image-tag>latest</docker-image-tag>
 
         <minio.version>8.5.13</minio.version>
-        <keycloak-admin-client.version>26.0.2</keycloak-admin-client.version>
+        <keycloak-admin-client.version>26.0.4</keycloak-admin-client.version>
         <jakarta.ws.rs-api.version>4.0.0</jakarta.ws.rs-api.version>
         <springdoc.version>2.6.0</springdoc.version>
         <spring-boot-maven-plugin.version>3.3.5</spring-boot-maven-plugin.version>
